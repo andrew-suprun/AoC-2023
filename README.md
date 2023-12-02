@@ -1,3 +1,3 @@
 # AoC 2023
 
-Advent of Code 20203 in Kotlin
+Advent of Code 2023 in Kotlin
