@@ -14,7 +14,7 @@ fun main() {
 fun run(scoreGame: (Game) -> Int): Int = File("input.data").readLines().sumOf { scoreGame(parseGame(it)) }
 
 fun parseGame(line: String): Game {
-    val (gameIdStr, gameDataStr) = line.split(":")
+    val (gameIdStr, gameDataStr) = line.split(": ")
     val gameId = gameIdStr.split(" ")[1].toInt()
     return Game(id = gameId, colors = parseColors(gameDataStr))
 }
@@ -23,12 +23,12 @@ fun parseColors(gameDataStr: String): Colors {
     var red = 0
     var green = 0
     var blue = 0
-    for (setStr in gameDataStr.split(";")) {
-        val colorsStr = setStr.split(",")
+    for (setStr in gameDataStr.split("; ")) {
+        val colorsStr = setStr.split(", ")
         for (colorStr in colorsStr) {
-            val (cubesStr, color) = colorStr.trim().split(" ")
+            val (cubesStr, color) = colorStr.split(" ")
             val cubes = cubesStr.toInt()
-            when (color.trim()) {
+            when (color) {
                 "red" -> red = max(red, cubes)
                 "green" -> green = max(green, cubes)
                 "blue" -> blue = max(blue, cubes)
