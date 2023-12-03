@@ -11,7 +11,7 @@ fun main() {
     println(run(::part2))
 }
 
-fun run(scoreGame: (Game) -> Int): Int = File("input.data").readLines().sumOf { scoreGame(parseGame(it)) }
+fun run(score: (Game) -> Int): Int = File("input.data").readLines().sumOf { score(parseGame(it)) }
 
 fun parseGame(line: String): Game {
     val (gameIdStr, gameDataStr) = line.split(": ")
