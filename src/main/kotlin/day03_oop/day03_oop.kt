@@ -52,7 +52,7 @@ abstract class Day03(fileName: String) {
     }
 
     fun adjacent(number: Number, row: Int, col: Int): Boolean =
-        row in number.row - 1..number.row + 1 && col in number.colStart - 1..number.colEnd
+            row in number.row - 1..number.row + 1 && col in number.colStart - 1..number.colEnd
 }
 
 class Part1(fileName: String) : Day03(fileName) {
