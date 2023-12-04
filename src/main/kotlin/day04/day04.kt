@@ -30,13 +30,13 @@ abstract class Day04(val fileName: String) {
     private fun parseInput(): List<Card> {
         val cards = mutableListOf<Card>()
         for (line in File(fileName).readLines()) {
-            val parts = line.split(Regex(": | \\| "))
+            val parts = line.split(": ", " | ")
             cards += Card(matchingNumbers = parseNumbers(parts[1]).intersect(parseNumbers(parts[2])).size)
         }
         return cards
     }
 
-    private fun parseNumbers(numbers: String): Set<Int> = numbers.trim().split(Regex(" +")).map { it.toInt() }.toSet()
+    private fun parseNumbers(numbers: String) = numbers.trim().split(Regex(" +")).toSet()
 }
 
 class Part1(fileName: String) : Day04(fileName) {
