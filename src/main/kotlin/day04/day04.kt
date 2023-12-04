@@ -1,10 +1,18 @@
 package day04
 
 fun main() {
-    println(run())
-    println(run())
+    Part1("test.data").run()
+    Part2("test.data").run()
 }
 
-fun run(): Int {
-    return 0
+abstract class Day04(fileName: String) {
+    fun run() {}
+}
+
+class Part1(fileName: String) : Day04(fileName) {
+
+}
+
+class Part2(fileName: String) : Day04(fileName) {
+
 }

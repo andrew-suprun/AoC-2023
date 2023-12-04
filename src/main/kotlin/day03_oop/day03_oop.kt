@@ -10,14 +10,13 @@ fun main() {
 data class Number(val value: Int, val row: Int, val colStart: Int, var colEnd: Int)
 
 abstract class Day03(fileName: String) {
-    val numbers = mutableListOf<Number>()
-    private val lines = File("input.data").readLines()
+    private val lines = File(fileName).readLines()
+    val numbers = parseEngine()
 
-    abstract fun score(char: Char, row: Int, col:Int): Int
+    abstract fun score(char: Char, row: Int, col: Int): Int
 
     fun run() {
         var result = 0
-        parseEngine()
 
         for ((row, line) in lines.withIndex()) {
             for ((col, char) in line.withIndex()) {
@@ -27,8 +26,8 @@ abstract class Day03(fileName: String) {
         println(result)
     }
 
-    private fun parseEngine() {
-        val lines = File("input.data").readLines()
+    private fun parseEngine(): List<Number> {
+        val numbers = mutableListOf<Number>()
         for ((row, line) in lines.withIndex()) {
             var firstDigit = -1
             for ((col, char) in line.withIndex()) {
@@ -49,13 +48,14 @@ abstract class Day03(fileName: String) {
                 numbers += Number(value = value, row = row, colStart = firstDigit, colEnd = line.length)
             }
         }
+        return numbers
     }
 
     fun adjacent(number: Number, row: Int, col: Int): Boolean =
         row in number.row - 1..number.row + 1 && col in number.colStart - 1..number.colEnd
 }
 
-class Part1(fileName: String): Day03(fileName) {
+class Part1(fileName: String) : Day03(fileName) {
     override fun score(char: Char, row: Int, col: Int): Int {
         var result = 0
         if (char != '.' && !char.isDigit()) {
@@ -69,7 +69,7 @@ class Part1(fileName: String): Day03(fileName) {
     }
 }
 
-class Part2(fileName: String): Day03(fileName) {
+class Part2(fileName: String) : Day03(fileName) {
     override fun score(char: Char, row: Int, col: Int): Int {
         var result = 0
         if (char == '*') {
