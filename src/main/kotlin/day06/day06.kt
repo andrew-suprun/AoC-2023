@@ -11,8 +11,11 @@ fun main() {
 
 fun run(part: (String) -> List<Long>) {
     val lines = File("input.data").readLines()
-    val solution = part(lines[0]).zip(part(lines[1])).map { (time, distance) -> Race(time = time, distance = distance) }
-        .map { solve(it) }.reduce { acc, n -> acc * n }
+    val solution = part(lines[0]).zip(part(lines[1]))
+        .map { (time, distance) -> Race(time = time, distance = distance) }
+        .map { solve(it) }
+        .reduce { acc, n -> acc * n }
+
     println(solution)
 }
 
