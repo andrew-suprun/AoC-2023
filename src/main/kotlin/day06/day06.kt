@@ -25,17 +25,17 @@ fun part2(line: String): List<Long> = listOf(line.split(Regex(" +")).drop(1).joi
 
 fun solve(race: Race): Long {
     var min = 0L
-    var max = race.time
+    var max = race.time / 2
     while (true) {
         val mid = (min + max + 1) / 2
         val prod = mid * (race.time - mid)
         if (prod <= race.distance) {
             min = mid
         } else {
-            if (max - min <= 1) {
-                return race.time + 1 - 2 * mid
-            }
             max = mid
+        }
+        if (max - min == 1L) {
+            return race.time + 1L - 2L * max
         }
     }
 }
