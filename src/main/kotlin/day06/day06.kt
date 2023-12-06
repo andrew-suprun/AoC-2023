@@ -1,6 +1,8 @@
 package day06
 
 import java.io.File
+import kotlin.math.ceil
+import kotlin.math.sqrt
 
 data class Race(val time: Long, val distance: Long)
 
@@ -13,7 +15,7 @@ fun run(part: (String) -> List<Long>) {
     val lines = File("input.data").readLines()
     val solution = part(lines[0]).zip(part(lines[1]))
         .map { (time, distance) -> Race(time = time, distance = distance) }
-        .map { solve(it) }
+        .map { altSolve(it) }
         .reduce { acc, n -> acc * n }
 
     println(solution)
@@ -38,6 +40,13 @@ fun solve(race: Race): Long {
             return race.time + 1L - 2L * max
         }
     }
+}
+
+fun altSolve(race: Race): Long {
+    val discriminant = (race.time*race.time - 4*race.distance).toDouble()
+    val solution = (race.time - sqrt(discriminant)) / 2
+    val roundedUp = ceil(solution).toLong()
+    return race.time + 1L - 2L * roundedUp
 }
 
 //  2449062
