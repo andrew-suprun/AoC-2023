@@ -40,22 +40,23 @@ fun part2(hand: String): Char {
 }
 
 fun type(sizes: List<Int>): Char = when (sizes[0]) {
-    1 -> 'a'
+    1 -> 'a'        // high card
     2 -> when (sizes[1]) {
-        1 -> 'b'
-        else -> 'c'
+        1 -> 'b'    // pair
+        else -> 'c' // two pair
     }
 
     3 -> when (sizes[1]) {
-        1 -> 'd'
-        else -> 'e'
+        1 -> 'd'    // three of a kind
+        else -> 'e' // full house
     }
 
-    4 -> 'f'
-    5 -> 'g'
+    4 -> 'f'        // four of a kind
+    5 -> 'g'        // 5 aces?
     else -> 'x'
 }
 
+// encode rank to sortable code
 val encode1 = mapOf(
     '2' to 'b',
     '3' to 'c',
@@ -72,6 +73,7 @@ val encode1 = mapOf(
     'A' to 'n',
 )
 
+// encode rank to sortable code
 val encode2 = mapOf(
     'J' to 'a',
     '2' to 'b',
