@@ -22,7 +22,7 @@ fun parseHand(line: String, encode: Map<Char, Char>, type: (String) -> Char): Bi
 }
 
 fun part1(hand: String): Char {
-    val sizes = hand.map { it }.groupBy { it }.map { it.value }.map { it.size }.sortedBy { -it }
+    val sizes = hand.map { it }.groupBy { it }.map { it.value.size }.sortedBy { -it }
     return type(sizes)
 }
 
@@ -33,7 +33,7 @@ fun part2(hand: String): Char {
         bestRank = g[1][0]
     }
     val sizes =
-        hand.replace('J', bestRank).map { it }.groupBy { it }.map { it.value }.map { it.size }.sortedBy { -it }
+        hand.replace('J', bestRank).map { it }.groupBy { it }.map { it.value.size }.sortedBy { -it }
             .toList()
 
     return type(sizes)
