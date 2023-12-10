@@ -27,7 +27,7 @@ final graph = {
 
 part2() async {
   final maze = Maze(await File("input.data").readAsLines());
-  var pipe = Set<({int y, int x})>();
+  var pipe = Set<Position>();
   do {
     maze.step();
     pipe.add(maze.pos);
@@ -36,25 +36,19 @@ part2() async {
   var tiles = 0;
   for (var y = 0; y < maze.lines.length; y++) {
     var buf = StringBuffer();
-    var crossUp = false;
-    var crossDown = false;
+    var inside = false;
     for (var x = 0; x < maze.lines[0].length; x++) {
       if (pipe.contains((y: y, x: x))) {
         var char = maze.lines[y][x];
         if (char == 'S') {
           char = maze.inferStartTile();
         }
-        if (char == '|') {
-          crossUp = !crossUp;
-          crossDown = !crossDown;
-        } else if (char == 'L' || char == 'J') {
-          crossUp = !crossUp;
-        } else if (char == '7' || char == 'F') {
-          crossDown = !crossDown;
+        if (char == '|' || char == '7' || char == 'F') {
+          inside = !inside;
         }
         buf.write(graph[char]);
       } else {
-        if (crossUp && crossDown) {
+        if (inside) {
           tiles++;
           buf.write('▉');
         } else {
@@ -67,13 +61,15 @@ part2() async {
   print(tiles);
 }
 
+typedef Position = ({int y, int x});
+
 enum Direction { North, East, South, West }
 
 final start = 'S'.codeUnitAt(0);
 
 class Maze {
   final List<String> lines;
-  ({int y, int x}) pos = (y: 0, x: 0);
+  Position pos = (y: 0, x: 0);
   Direction dir = Direction.West;
   int steps = 0;
   String get char => lines[pos.y][pos.x];
