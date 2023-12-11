@@ -1,11 +1,11 @@
-import 'dart:io';
+import 'dart:io' show File;
 
-void main() async {
+void main() {
   var start = DateTime.now();
-  var (part1, part2) = (await File('input.data').readAsLines())
+  var (part1, part2) = File('input/day09.data').readAsLinesSync()
       .map((line) => solve(line))
       .reduce((acc, sol) => (acc.$1 + sol.$1, acc.$2 + sol.$2));
-  print('Part1: $part1\nPart2: $part2');
+  print('Part 1: $part1\nPart 2: $part2');
   print(DateTime.now().difference(start));
 }
 
@@ -24,3 +24,6 @@ void main() async {
 
   return (part1, part2);
 }
+
+// Part 1: 1953784198
+// Part 2: 957

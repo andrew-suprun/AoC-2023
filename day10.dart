@@ -1,16 +1,15 @@
 import 'dart:io';
 
-Future<void> main() async {
+void main() {
   var start = DateTime.now();
-  var maze = Maze(await File('input.data').readAsLines());
-  var r1 = part1(maze);
-  var r2 = part2(maze);
-  await r1;
-  await r2;
+  var input = File('input/day10.data').readAsLinesSync();
+  part1(input);
+  part2(input);
   print(DateTime.now().difference(start));
 }
 
-Future<void> part1(Maze maze) async {
+void part1(List<String> input) {
+  var maze = Maze(input);
   do {
     maze.step();
   } while (maze.char != 'S');
@@ -28,8 +27,8 @@ var graph = {
   'S': 'S',
 };
 
-Future<void> part2(Maze maze) async {
-  var maze = Maze(await File('input.data').readAsLines());
+void part2(List<String> input) {
+  var maze = Maze(input);
   var pipe = Set<Position>();
   do {
     maze.step();
@@ -82,7 +81,7 @@ class Maze {
     for (var (y, line) in lines.indexed) {
       for (var (x, char) in line.codeUnits.indexed) {
         if (char == start) {
-          this.pos = (y: y, x: x);
+          pos = (x: x, y: y);
           break loop;
         }
       }

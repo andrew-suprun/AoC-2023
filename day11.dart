@@ -1,7 +1,5 @@
 import 'dart:io' show File;
 
-typedef Location = ({int y, int x});
-
 void main() {
   var start = DateTime.now();
   print("Part 1: ${run(1)}");
@@ -10,7 +8,7 @@ void main() {
 }
 
 int run(int increment) {
-  var lines = File('input.data').readAsLinesSync();
+  var lines = File('input/day11.data').readAsLinesSync();
   var xs = List.filled(lines[0].length, 0);
   var ys = List.filled(lines.length, 0);
 
@@ -30,12 +28,12 @@ int run(int increment) {
     }
   }
 
-  List<Location> galaxies = [];
+  var galaxies = <({int x, int y})>[];
   for (var y = 0; y < lines.length; y++) {
     var line = lines[y];
     for (var x = 0; x < line.length; x++) {
       if (line[x] == '#') {
-        galaxies.add((y: ys[y], x: xs[x]));
+        galaxies.add((x: xs[x], y: ys[y]));
       }
     }
   }
@@ -43,16 +41,16 @@ int run(int increment) {
   var sum = 0;
   for (var i = 0; i < galaxies.length - 1; i++) {
     for (var j = i + 1; j < galaxies.length; j++) {
-      sum += abs(galaxies[i].x - galaxies[j].x) +
-          abs(galaxies[i].y - galaxies[j].y);
+      sum += distance(galaxies[i], galaxies[j]);
     }
   }
 
   return sum;
 }
 
-int abs(int x) => x < 0 ? -x : x;
+int distance(({int x, int y}) a, ({int x, int y}) b) =>
+    abs(a.x - b.x) + abs(a.y - b.y);
+int abs(int x) => x * x.sign;
 
-
-// 9418609
-// 593821230983
+// Part 1: 9418609
+// Part 2: 593821230983
