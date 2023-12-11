@@ -10,7 +10,6 @@ part1() async {
   do {
     maze.step();
   } while (maze.char != 'S');
-  print(maze);
   print(maze.steps ~/ 2);
 }
 
