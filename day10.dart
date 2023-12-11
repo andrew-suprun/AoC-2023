@@ -1,30 +1,34 @@
 import 'dart:io';
 
-void main() async {
-  await part1();
-  part2();
+Future<void> main() async {
+  var start = DateTime.now();
+  var maze = Maze(await File('input.data').readAsLines());
+  var r1 = part1(maze);
+  var r2 = part2(maze);
+  await r1;
+  await r2;
+  print(DateTime.now().difference(start));
 }
 
-Future<void> part1() async {
-  var maze = Maze(await File('input.data').readAsLines());
+Future<void> part1(Maze maze) async {
   do {
     maze.step();
   } while (maze.char != 'S');
-  print(maze.steps ~/ 2);
+  print('Part 1: ${maze.steps ~/ 2}');
 }
 
 var graph = {
   '|': '│',
   '-': '─',
-  'L': '└',
-  'J': '┘',
-  '7': '┐',
-  'F': '┌',
+  'L': '╰',
+  'J': '╯',
+  '7': '╮',
+  'F': '╭',
   '.': ' ',
   'S': 'S',
 };
 
-Future<void> part2() async {
+Future<void> part2(Maze maze) async {
   var maze = Maze(await File('input.data').readAsLines());
   var pipe = Set<Position>();
   do {
@@ -57,7 +61,7 @@ Future<void> part2() async {
     }
     print(buf.toString());
   }
-  print(tiles);
+  print('Part 2: $tiles');
 }
 
 typedef Position = ({int y, int x});
