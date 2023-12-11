@@ -1,6 +1,7 @@
 *.data
 *.log
 *.exe
+test.dart
 
 ### IntelliJ IDEA ###
 out/
