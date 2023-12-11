@@ -6,14 +6,14 @@ void main() async {
 }
 
 part1() async {
-  final maze = Maze(await File("input.data").readAsLines());
+  var maze = Maze(await File("input.data").readAsLines());
   do {
     maze.step();
   } while (maze.char != 'S');
   print(maze.steps ~/ 2);
 }
 
-final graph = {
+var graph = {
   "|": "│",
   "-": "─",
   "L": "└",
@@ -25,7 +25,7 @@ final graph = {
 };
 
 part2() async {
-  final maze = Maze(await File("input.data").readAsLines());
+  var maze = Maze(await File("input.data").readAsLines());
   var pipe = Set<Position>();
   do {
     maze.step();
@@ -64,10 +64,10 @@ typedef Position = ({int y, int x});
 
 enum Direction { North, East, South, West }
 
-final start = 'S'.codeUnitAt(0);
+var start = 'S'.codeUnitAt(0);
 
 class Maze {
-  final List<String> lines;
+  List<String> lines;
   Position pos = (y: 0, x: 0);
   Direction dir = Direction.West;
   int steps = 0;
@@ -75,8 +75,8 @@ class Maze {
 
   Maze(this.lines) {
     loop:
-    for (final (y, line) in lines.indexed) {
-      for (final (x, char) in line.codeUnits.indexed) {
+    for (var (y, line) in lines.indexed) {
+      for (var (x, char) in line.codeUnits.indexed) {
         if (char == start) {
           this.pos = (y: y, x: x);
           break loop;
@@ -98,10 +98,10 @@ class Maze {
   }
 
   String inferStartTile() {
-    final connectWest = "-LF".contains(lines[pos.y][pos.x - 1]);
-    final connectEast = "-J7".contains(lines[pos.y][pos.x + 1]);
-    final connectNorth = "|7F".contains(lines[pos.y - 1][pos.x]);
-    final connectSouth = "|JL".contains(lines[pos.y + 1][pos.x]);
+    var connectWest = "-LF".contains(lines[pos.y][pos.x - 1]);
+    var connectEast = "-J7".contains(lines[pos.y][pos.x + 1]);
+    var connectNorth = "|7F".contains(lines[pos.y - 1][pos.x]);
+    var connectSouth = "|JL".contains(lines[pos.y + 1][pos.x]);
     if (connectSouth) {
       if (connectNorth) return "|";
       if (connectWest) return '7';
