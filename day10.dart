@@ -1,12 +1,12 @@
 import 'dart:io';
 
 void main() async {
-  part1();
+  await part1();
   part2();
 }
 
-part1() async {
-  var maze = Maze(await File("input.data").readAsLines());
+Future<void> part1() async {
+  var maze = Maze(await File('input.data').readAsLines());
   do {
     maze.step();
   } while (maze.char != 'S');
@@ -14,18 +14,18 @@ part1() async {
 }
 
 var graph = {
-  "|": "│",
-  "-": "─",
-  "L": "└",
-  "J": "┘",
-  "7": "┐",
-  "F": "┌",
-  ".": " ",
-  "S": "S",
+  '|': '│',
+  '-': '─',
+  'L': '└',
+  'J': '┘',
+  '7': '┐',
+  'F': '┌',
+  '.': ' ',
+  'S': 'S',
 };
 
-part2() async {
-  var maze = Maze(await File("input.data").readAsLines());
+Future<void> part2() async {
+  var maze = Maze(await File('input.data').readAsLines());
   var pipe = Set<Position>();
   do {
     maze.step();
@@ -84,13 +84,13 @@ class Maze {
       }
     }
 
-    if ("-LF".contains(lines[pos.y][pos.x - 1])) {
+    if ('-LF'.contains(lines[pos.y][pos.x - 1])) {
       dir = Direction.West;
-    } else if ("-J7".contains(lines[pos.y][pos.x + 1])) {
+    } else if ('-J7'.contains(lines[pos.y][pos.x + 1])) {
       dir = Direction.East;
-    } else if ("|7F".contains(lines[pos.y - 1][pos.x])) {
+    } else if ('|7F'.contains(lines[pos.y - 1][pos.x])) {
       dir = Direction.North;
-    } else if ("|JL".contains(lines[pos.y + 1][pos.x])) {
+    } else if ('|JL'.contains(lines[pos.y + 1][pos.x])) {
       dir = Direction.South;
     } else {
       throw Error();
@@ -98,12 +98,12 @@ class Maze {
   }
 
   String inferStartTile() {
-    var connectWest = "-LF".contains(lines[pos.y][pos.x - 1]);
-    var connectEast = "-J7".contains(lines[pos.y][pos.x + 1]);
-    var connectNorth = "|7F".contains(lines[pos.y - 1][pos.x]);
-    var connectSouth = "|JL".contains(lines[pos.y + 1][pos.x]);
+    var connectWest = '-LF'.contains(lines[pos.y][pos.x - 1]);
+    var connectEast = '-J7'.contains(lines[pos.y][pos.x + 1]);
+    var connectNorth = '|7F'.contains(lines[pos.y - 1][pos.x]);
+    var connectSouth = '|JL'.contains(lines[pos.y + 1][pos.x]);
     if (connectSouth) {
-      if (connectNorth) return "|";
+      if (connectNorth) return '|';
       if (connectWest) return '7';
       if (connectEast) return 'F';
     }
@@ -111,11 +111,11 @@ class Maze {
       if (connectWest) return 'J';
       if (connectEast) return 'L';
     }
-    if (connectEast && connectWest) return "-";
+    if (connectEast && connectWest) return '-';
     return ' ';
   }
 
-  step() {
+  void step() {
     switch (dir) {
       case Direction.North:
         pos = (y: pos.y - 1, x: pos.x);
@@ -150,7 +150,7 @@ class Maze {
   }
 
   String toString() =>
-      "char: $char, pos: $pos, dir: ${dir.toString()}, steps: $steps";
+      'char: $char, pos: $pos, dir: ${dir.toString()}, steps: $steps';
 }
 
 // 7102
