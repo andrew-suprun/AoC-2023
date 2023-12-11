@@ -11,8 +11,8 @@ void main() {
 
 int run(int increment) {
   var lines = File('input.data').readAsLinesSync();
-  var xs = List<int>.filled(lines[0].length, 0);
-  var ys = List<int>.filled(lines.length, 0);
+  var xs = List.filled(lines[0].length, 0);
+  var ys = List.filled(lines.length, 0);
 
   var xInc = 0;
   for (var idx = 0; idx < lines[0].length; idx++) {
@@ -30,7 +30,7 @@ int run(int increment) {
     }
   }
 
-  var galaxies = List<Location>.empty(growable: true);
+  List<Location> galaxies = [];
   for (var y = 0; y < lines.length; y++) {
     var line = lines[y];
     for (var x = 0; x < line.length; x++) {
