@@ -120,36 +120,32 @@ class Maze {
     switch (dir) {
       case Direction.North:
         pos = (y: pos.y - 1, x: pos.x);
-        switch (lines[pos.y][pos.x]) {
-          case '7':
-            dir = Direction.West;
-          case 'F':
-            dir = Direction.East;
-        }
+        dir = switch (lines[pos.y][pos.x]) {
+          '7' => Direction.West,
+          'F' => Direction.East,
+          _ => dir,
+        };
       case Direction.East:
         pos = (y: pos.y, x: pos.x + 1);
-        switch (lines[pos.y][pos.x]) {
-          case 'J':
-            dir = Direction.North;
-          case '7':
-            dir = Direction.South;
-        }
+        dir = switch (lines[pos.y][pos.x]) {
+          'J' => Direction.North,
+          '7' => Direction.South,
+          _ => dir,
+        };
       case Direction.South:
         pos = (y: pos.y + 1, x: pos.x);
-        switch (lines[pos.y][pos.x]) {
-          case 'J':
-            dir = Direction.West;
-          case 'L':
-            dir = Direction.East;
-        }
+        dir = switch (lines[pos.y][pos.x]) {
+          'J' => Direction.West,
+          'L' => Direction.East,
+          _ => dir,
+        };
       case Direction.West:
         pos = (y: pos.y, x: pos.x - 1);
-        switch (lines[pos.y][pos.x]) {
-          case 'L':
-            dir = Direction.North;
-          case 'F':
-            dir = Direction.South;
-        }
+        dir = switch (lines[pos.y][pos.x]) {
+          'L' => Direction.North,
+          'F' => Direction.South,
+          _ => dir,
+        };
     }
     steps++;
   }
