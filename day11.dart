@@ -1,16 +1,16 @@
-import 'dart:io';
+import 'dart:io' show File;
 
 typedef Location = ({int y, int x});
 
-Future<void> main() async {
+void main() {
   var start = DateTime.now();
-  print("Part 1: ${await run(1)}");
-  print("Part 2: ${await run(999999)}");
+  print("Part 1: ${run(1)}");
+  print("Part 2: ${run(999999)}");
   print("Total time: ${DateTime.now().difference(start)}");
 }
 
-Future<int> run(int increment) async {
-  var lines = await File('input.data').readAsLines();
+int run(int increment) {
+  var lines = File('input.data').readAsLinesSync();
   var xs = List<int>.filled(lines[0].length, 0);
   var ys = List<int>.filled(lines.length, 0);
 
