@@ -29,7 +29,7 @@ var graph = {
 
 void part2(List<String> input) {
   var maze = Maze(input);
-  var pipe = Set<Position>();
+  var pipe = <Position>{};
   do {
     maze.step();
     pipe.add(maze.pos);
@@ -65,14 +65,14 @@ void part2(List<String> input) {
 
 typedef Position = ({int y, int x});
 
-enum Direction { North, East, South, West }
+enum Direction { north, east, south, west }
 
 var start = 'S'.codeUnitAt(0);
 
 class Maze {
   List<String> lines;
   Position pos = (y: 0, x: 0);
-  Direction dir = Direction.West;
+  Direction dir = Direction.west;
   int steps = 0;
   String get char => lines[pos.y][pos.x];
 
@@ -88,13 +88,13 @@ class Maze {
     }
 
     if ('-LF'.contains(lines[pos.y][pos.x - 1])) {
-      dir = Direction.West;
+      dir = Direction.west;
     } else if ('-J7'.contains(lines[pos.y][pos.x + 1])) {
-      dir = Direction.East;
+      dir = Direction.east;
     } else if ('|7F'.contains(lines[pos.y - 1][pos.x])) {
-      dir = Direction.North;
+      dir = Direction.north;
     } else if ('|JL'.contains(lines[pos.y + 1][pos.x])) {
-      dir = Direction.South;
+      dir = Direction.south;
     } else {
       throw Error();
     }
@@ -120,38 +120,39 @@ class Maze {
 
   void step() {
     switch (dir) {
-      case Direction.North:
+      case Direction.north:
         pos = (y: pos.y - 1, x: pos.x);
         dir = switch (lines[pos.y][pos.x]) {
-          '7' => Direction.West,
-          'F' => Direction.East,
+          '7' => Direction.west,
+          'F' => Direction.east,
           _ => dir,
         };
-      case Direction.East:
+      case Direction.east:
         pos = (y: pos.y, x: pos.x + 1);
         dir = switch (lines[pos.y][pos.x]) {
-          'J' => Direction.North,
-          '7' => Direction.South,
+          'J' => Direction.north,
+          '7' => Direction.south,
           _ => dir,
         };
-      case Direction.South:
+      case Direction.south:
         pos = (y: pos.y + 1, x: pos.x);
         dir = switch (lines[pos.y][pos.x]) {
-          'J' => Direction.West,
-          'L' => Direction.East,
+          'J' => Direction.west,
+          'L' => Direction.east,
           _ => dir,
         };
-      case Direction.West:
+      case Direction.west:
         pos = (y: pos.y, x: pos.x - 1);
         dir = switch (lines[pos.y][pos.x]) {
-          'L' => Direction.North,
-          'F' => Direction.South,
+          'L' => Direction.north,
+          'F' => Direction.south,
           _ => dir,
         };
     }
     steps++;
   }
 
+  @override
   String toString() =>
       'char: $char, pos: $pos, dir: ${dir.toString()}, steps: $steps';
 }
