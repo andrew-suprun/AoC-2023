@@ -3,14 +3,6 @@ ROUND = 1
 CUBE = 2
 
 
-def encode(c: str) -> int:
-    return SPACE if c == '.' else ROUND if c == 'O' else CUBE
-
-
-def parse_input(lines: list[str]) -> list[list[int]]:
-    return [[encode(c) for c in line.strip()] for line in lines]
-
-
 def rotate(platform: list[list[int]]) -> list[list[int]]:
     max_x = len(platform[0])
     max_y = len(platform)
@@ -18,8 +10,7 @@ def rotate(platform: list[list[int]]) -> list[list[int]]:
 
 
 def tilt(platform: list[list[int]]) -> list[list[int]]:
-    tilted = clone(platform)
-    for row in tilted:
+    for row in platform:
         place = 0
         for (i, rock) in enumerate(row):
             if rock == ROUND:
@@ -28,7 +19,7 @@ def tilt(platform: list[list[int]]) -> list[list[int]]:
                 place += 1
             elif rock == CUBE:
                 place = i + 1
-    return tilted
+    return platform
 
 
 def cycle(platform: list[list[int]]) -> list[list[int]]:
@@ -48,10 +39,6 @@ def load(platform: list[list[int]]) -> int:
     return result
 
 
-def clone(platform: list[list[int]]) -> list[list[int]]:
-    return [[platform[y][x] for x in range(len(platform[0]))] for y in range(len(platform))]
-
-
 def platform_hash(platform: list[list[int]]) -> int:
     result = 0
     for row in platform:
@@ -62,7 +49,7 @@ def platform_hash(platform: list[list[int]]) -> int:
 
 def prepare_platform() -> list[list[int]]:
     with open('input/day14.data') as f:
-        platform = parse_input(f.readlines())
+        platform = [[SPACE if c == '.' else ROUND if c == 'O' else CUBE for c in line.strip()] for line in f.readlines()]
     for _ in range(3):
         platform = rotate(platform)
     return platform
