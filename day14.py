@@ -32,7 +32,7 @@ def tilt(platform: list[list[int]]) -> list[list[int]]:
 
 
 def cycle(platform: list[list[int]]) -> list[list[int]]:
-    for i in range(4):
+    for _ in range(4):
         platform = tilt(platform)
         platform = rotate(platform)
 
