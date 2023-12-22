@@ -56,10 +56,7 @@ def calc_energized(grid: list[str], start: (int, int, int)) -> int:
             if 0 <= new_place[0] <= max_y and 0 <= new_place[1] <= max_x:
                 paths.append(new_place)
 
-    locations = set[(int, int)]()
-    for loc in energized:
-        locations.add((loc[0], loc[1]))
-    return len(locations)
+    return len({(row, col) for (row, col, _) in energized})
 
 
 def run():
