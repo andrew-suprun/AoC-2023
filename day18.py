@@ -6,12 +6,12 @@ DELTAS2 = {'0': (0, 1), '1': (1, 0), '2': (0, -1), '3': (-1, 0)}
 VLine = namedtuple('VLine', 'x, y1, y2')
 
 
-def parse_line1(line: str) -> ((int, int), int):
+def parse_line_part1(line: str) -> ((int, int), int):
     dir, steps, *_ = line.split()
     return DELTAS1[dir], int(steps)
 
 
-def parse_line2(line: str) -> ((int, int), int):
+def parse_line_part2(line: str) -> ((int, int), int):
     _, _, digits = line.split()
     return DELTAS2[digits[7]], int(digits[2:7], 16)
 
@@ -66,8 +66,8 @@ def run(parse_line) -> int:
     return total
 
 
-print(run(parse_line1))
-print(run(parse_line2))
+print(run(parse_line_part1))
+print(run(parse_line_part2))
 
 # Part 1: 40761
 # Part 2: 106920098354636
