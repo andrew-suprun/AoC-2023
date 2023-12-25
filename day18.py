@@ -66,8 +66,8 @@ def solve_with(parse_line) -> int:
     return total
 
 
-print(solve_with(part1_parser))
-print(solve_with(part2_parser))
+print(f'Part 1: {solve_with(part1_parser)}')
+print(f'Part 2: {solve_with(part2_parser)}')
 
 # Part 1: 40761
 # Part 2: 106920098354636
