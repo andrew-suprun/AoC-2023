@@ -22,8 +22,6 @@ def run(parse_line) -> int:
     minx = 0
     v_lines = set[VLine]()
     ys = {0}
-    xs = {0}
-    p = set()
     with open('input/day18.data') as f:
         for line in f.readlines():
             delta, steps = parse_line(line)
@@ -37,8 +35,6 @@ def run(parse_line) -> int:
             loc = ny, nx
             minx = min(minx, nx)
             ys.add(ny)
-            xs.add(nx)
-            p.add((ny, nx))
 
     ys_sorted = [y for y in ys]
     ys_sorted.sort()
