@@ -12,7 +12,6 @@ def parse_op(op: str) -> (str, str, str, str):
 
 
 class Workflow:
-
     def __init__(self, line):
         self.name, rules_str = line.strip('}').split('{')
         rules = [rule for rule in rules_str.split(',')]
@@ -32,28 +31,24 @@ class Workflow:
         return f'ops={self.ops}, last={self.last}'
 
 
-def solve() -> int:
-    with open('input/day19.data') as f:
-        text = f.read()
-    rules_text, ratings_text = text.split('\n\n')
-    rules = [Workflow(line) for line in rules_text.splitlines()]
-    workflows = dict((wf.name, wf) for wf in rules)
-    ratings = [parse_ratings(line) for line in ratings_text.splitlines()]
-    total = 0
-    for rating in ratings:
-        name = 'in'
-        while True:
-            next = workflows[name].apply(rating)
-            if next == 'A':
-                total += sum(rating.values())
-                break
-            elif next == 'R':
-                break
-            else:
-                name = next
-    return total
+with open('input/day19.data') as f:
+    text = f.read()
+rules_text, ratings_text = text.split('\n\n')
+rules = [Workflow(line) for line in rules_text.splitlines()]
+workflows = dict((wf.name, wf) for wf in rules)
+ratings = [parse_ratings(line) for line in ratings_text.splitlines()]
+total = 0
+for rating in ratings:
+    name = 'in'
+    while True:
+        next = workflows[name].apply(rating)
+        if next == 'A':
+            total += sum(rating.values())
+            break
+        elif next == 'R':
+            break
+        else:
+            name = next
 
-
-print(f'Part 1: {solve()}')
-
+print(f'Part 1: {total}')
 # Part 1: 287054
