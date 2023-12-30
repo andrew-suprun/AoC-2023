@@ -1,13 +1,21 @@
+from typing import Protocol
 from collections import deque
 
 
-class Model:
-    def __init__(self):
-        self.targets = list[str]()
+class Network(Protocol):
+    def send(self, source: str, target: str, level: bool):
+        ...
 
 
-class Network:
-    def __init__(self, modules: dict[str, Model]):
+class Module(Protocol):
+    targets: list[str]
+
+    def trigger(self, source: str, level: bool, network: Network):
+        ...
+
+
+class ModuleNetwork:
+    def __init__(self, modules: dict[str, Module]):
         self.modules = modules
         self.signals = deque[tuple[str, str, bool]]()
         self.low_signals = 0
@@ -30,9 +38,10 @@ class Network:
                 m.trigger(signal[0], signal[2], self)
 
 
-class FlipFlop(Model):
+class FlipFlop:
+    targets: list[str]
+
     def __init__(self, name: str):
-        super().__init__()
         self.name = name
         self.state = False
 
@@ -46,9 +55,10 @@ class FlipFlop(Model):
         return f"FlipFlop: state={self.state} out={self.targets}"
 
 
-class Conj(Model):
+class Conj(Module):
+    targets: list[str]
+
     def __init__(self, name: str):
-        super().__init__()
         self.name = name
         self.state = dict[str, bool]()
 
@@ -62,12 +72,13 @@ class Conj(Model):
         return f"Conj: state={self.state} out={self.targets}"
 
 
-class Broadcaster(Model):
+class Broadcaster(Module):
+    targets: list[str]
+
     def __init__(self, name: str):
-        super().__init__()
         self.name = name
 
-    def trigger(self, _source: str, _target: str, network: Network):
+    def trigger(self, _source: str, _level: bool, network: Network):
         for target in self.targets:
             network.send("broadcaster", target, False)
 
@@ -75,8 +86,8 @@ class Broadcaster(Model):
         return f"Broadcaster: out={self.targets}"
 
 
-def parse_input() -> dict[str, Model]:
-    modules = dict[str, Model]()
+def parse_input() -> dict[str, Module]:
+    modules = dict[str, Module]()
     with open("input/day20.data") as f:
         for line in f.readlines():
             full_name, output_str = line.strip().split(" -> ")
@@ -102,7 +113,7 @@ def parse_input() -> dict[str, Model]:
     return modules
 
 
-network = Network(parse_input())
+network = ModuleNetwork(parse_input())
 
 for _ in range(1000):
     network.run()
