@@ -8,6 +8,8 @@ class Network(Protocol):
 
 
 class Module(Protocol):
+    targets: list[str]
+
     def trigger(self, source: str, level: bool):
         ...
 
@@ -15,7 +17,7 @@ class Module(Protocol):
 class ModuleNetwork:
     def __init__(self):
         self.modules = dict[str, Module]()
-        self.signals = deque[tuple[str, str, bool]]()
+        self.signals = deque[(str, str, bool)]()
         self.low_signals = 0
         self.high_signals = 0
 
@@ -89,7 +91,7 @@ class Broadcaster:
 
 def parse_input() -> ModuleNetwork:
     network = ModuleNetwork()
-    with open("input/day20.data") as f:
+    with open("input/day20.data", encoding="utf-8") as f:
         for line in f.readlines():
             full_name, output_str = line.strip().split(" -> ")
             module = network.modules.get(full_name[1:])
@@ -105,8 +107,8 @@ def parse_input() -> ModuleNetwork:
                     network.modules[full_name] = module
             module.targets = output_str.split(", ")
 
-    for name, m in network.modules.items():
-        for out in m.targets:
+    for name, module in network.modules.items():
+        for out in module.targets:
             receiver = network.modules.get(out)
             if type(receiver) is Conj:
                 receiver.state[name] = False
