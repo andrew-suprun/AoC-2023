@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import Protocol
 from collections import deque
 
@@ -38,8 +39,12 @@ class ModuleNetwork:
                 module.trigger(signal[0], signal[2])
 
 
+@dataclass
 class FlipFlop:
     targets: list[str]
+    name: str
+    network: Network
+    state: bool
 
     def __init__(self, name: str, network: Network):
         self.name = name
@@ -52,10 +57,8 @@ class FlipFlop:
             for out in self.targets:
                 self.network.send(self.name, out, self.state)
 
-    def __repr__(self):
-        return f"FlipFlop: state={self.state} out={self.targets}"
 
-
+@dataclass
 class Conj:
     targets: list[str]
 
@@ -70,10 +73,8 @@ class Conj:
         for out in self.targets:
             self.network.send(self.name, out, level)
 
-    def __repr__(self):
-        return f"Conj: state={self.state} out={self.targets}"
 
-
+@dataclass
 class Broadcaster:
     targets: list[str]
 
@@ -84,9 +85,6 @@ class Broadcaster:
     def trigger(self, _source: str, _level: bool):
         for target in self.targets:
             self.network.send("broadcaster", target, False)
-
-    def __repr__(self):
-        return f"Broadcaster: out={self.targets}"
 
 
 def parse_input() -> ModuleNetwork:
