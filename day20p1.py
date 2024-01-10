@@ -32,10 +32,9 @@ class ModuleNetwork:
     def run(self):
         self.send("button", "broadcaster", False)
         while self.signals:
-            signal = self.signals.popleft()
-            module = self.modules.get(signal[1])
-            if module:
-                module.trigger(signal[0], signal[2])
+            source, target, level = self.signals.popleft()
+            module = self.modules.get(target)
+            module and module.trigger(source, level)
 
 
 class FlipFlop:
